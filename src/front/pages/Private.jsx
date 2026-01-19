@@ -43,7 +43,7 @@ export const Private = () => {
                 }
 
                 setUsername(data.username || "");
-                setFeedback({ type: "success", text: "" });
+                setFeedback({ type: "", text: "" });
                 setIsLoading(false);
                 return;
             } catch (err) {
@@ -53,3 +53,30 @@ export const Private = () => {
                 return;
             }
         };
+
+        verify();
+    }, [navigate]);
+
+    const alertClass =
+        feedback.type === "error" ? "alert alert-danger" : "alert alert-success";
+
+    return (
+        <div className="bg-dark text-white text-center vh-100 pt-5 pb-5">
+            <div className="container">
+                <h1>This is a private page</h1>
+
+                {isLoading && <p className="text-secondary mt-3">Loading...</p>}
+
+                {!isLoading && feedback.text !== "" && (
+                    <div className={alertClass} role="alert">
+                        {feedback.text}
+                    </div>
+                )}
+
+                {!isLoading && feedback.text === "" && (
+                    <h2 className="mt-3">Welcome {username}</h2>
+                )}
+            </div>
+        </div>
+    );
+};
